@@ -306,9 +306,9 @@ class SessionDelegate : public ST::CaptureSessionDelegate {
         {
           ROS_DEBUG_STREAM_THROTTLE(1.0, "Structure_Core_Node" << ": handleAccel");
           Flag_Acc = true;
-          imu_.linear_acceleration.x = accelEvent.acceleration().x * g2ms2;
+          imu_.linear_acceleration.x = -accelEvent.acceleration().z * g2ms2;
           imu_.linear_acceleration.y = accelEvent.acceleration().y * g2ms2;
-          imu_.linear_acceleration.z = accelEvent.acceleration().z * g2ms2;
+          imu_.linear_acceleration.z = accelEvent.acceleration().x * g2ms2;
 
           imu_.header.stamp.fromSec(accelEvent.timestamp()  + biasT);
 
@@ -319,9 +319,9 @@ class SessionDelegate : public ST::CaptureSessionDelegate {
         {
           ROS_DEBUG_STREAM_THROTTLE(1.0, "Structure_Core_Node" << ": handleGyro");
           Flag_Gyro = true;
-          imu_.angular_velocity.x = gyroEvent.rotationRate().x;
+          imu_.angular_velocity.x = -gyroEvent.rotationRate().z;
           imu_.angular_velocity.y = gyroEvent.rotationRate().y;
-          imu_.angular_velocity.z = gyroEvent.rotationRate().z;
+          imu_.angular_velocity.z = gyroEvent.rotationRate().x;
 
           imu_.header.stamp.fromSec(gyroEvent.timestamp() + biasT);
 
